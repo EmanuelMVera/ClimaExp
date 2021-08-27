@@ -1,2 +1,0 @@
-# ClimaExp
-Proyecto de practica
