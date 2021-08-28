@@ -1,7 +1,7 @@
 import react, {useState} from "react";
 
 export default function App() {
-    const [input, setInput] = useState({caja: ""});
+    const [input, setInput] = useState([]);
   /*
   fetch(url) 
   //acepta la URL de la API como parámetro
@@ -15,6 +15,7 @@ export default function App() {
     });*/
 
     function onSearch(ciudad) {
+    ciudad.preventDefault()
     fetch(`http://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=4ae2636d8dfbdc3044bede63951a019b&units=metric`)
       .then(r => r.json())
       .then((recurso) => {
@@ -32,13 +33,13 @@ export default function App() {
             latitud: recurso.coord.lat,
             longitud: recurso.coord.lon
           };
-          setCities(oldCities => [...oldCities, ciudad]);
+          setInput(input => [...input, ciudad]);
         } else {
           alert("Ciudad no encontrada");
         }
       });
       }
-      
+
         const handleInputChange = (event) => {
           setInput({
               ...input,
@@ -48,10 +49,10 @@ export default function App() {
 
     return (
         <div>
-        <form>
+        <form onSubmit={onSearch}>
           <label>Buscador</label> 
-          <input type="text" name="caja" onChange={handleInputChange}/>
-          <button type="submit" onClick={onSearch}>Buscar Ciudad</button>
+          <input type="text" onChange={handleInputChange}/>
+          <button type="submit">Buscar Ciudad</button>
           <h1>{input.caja}</h1>
         </form>
       </div>
