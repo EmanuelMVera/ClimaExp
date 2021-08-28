@@ -1,6 +1,8 @@
+import react, {useState} from "react";
 
 function App() {
-
+  const [input, setInput] = useState({caja: ""});
+  /*
   fetch(url) 
   //acepta la URL de la API como parámetro
     .then(function() {
@@ -10,7 +12,7 @@ function App() {
     .catch(function() {
       //se ejecutará si se produce un error al invocar la API de su elección
 
-    });
+    });*/
   //Ejemplo con API:`http://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=4ae2636d8dfbdc3044bede63951a019b&units=metric`
   /*
   function onSearch(ciudad) {
@@ -37,10 +39,17 @@ function App() {
         }
       });
   */
+      const handleInputChange = (event) => {
+        setInput({
+            ...input,
+            [event.target.name] : event.target.value
+        })
+    }
+
   return (
-    <div>
-        <input type="text"></input>
-        <button>Buscar</button>
+    <div> 
+      <input type="text" name="caja" onChange={handleInputChange}/>     
+      <h1>{input.caja}</h1>
     </div>
   );
 }
