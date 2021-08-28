@@ -1,7 +1,7 @@
 import react, {useState} from "react";
 
-function App() {
-  const [input, setInput] = useState({caja: ""});
+export default function App() {
+    const [input, setInput] = useState({caja: ""});
   /*
   fetch(url) 
   //acepta la URL de la API como parámetro
@@ -13,10 +13,9 @@ function App() {
       //se ejecutará si se produce un error al invocar la API de su elección
 
     });*/
-  //Ejemplo con API:`http://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=4ae2636d8dfbdc3044bede63951a019b&units=metric`
-  /*
-  function onSearch(ciudad) {
-    fetch(`http://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=${apiKey}&units=metric`)
+
+    function onSearch(ciudad) {
+    fetch(`http://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=4ae2636d8dfbdc3044bede63951a019b&units=metric`)
       .then(r => r.json())
       .then((recurso) => {
         if(recurso.main !== undefined){
@@ -38,20 +37,24 @@ function App() {
           alert("Ciudad no encontrada");
         }
       });
-  */
-      const handleInputChange = (event) => {
-        setInput({
-            ...input,
-            [event.target.name] : event.target.value
-        })
-    }
+      }
+      
+        const handleInputChange = (event) => {
+          setInput({
+              ...input,
+              [event.target.name] : event.target.value
+          })
+      }
 
-  return (
-    <div> 
-      <input type="text" name="caja" onChange={handleInputChange}/>     
-      <h1>{input.caja}</h1>
-    </div>
-  );
+    return (
+        <div>
+        <form>
+          <label>Buscador</label> 
+          <input type="text" name="caja" onChange={handleInputChange}/>
+          <button type="submit" onClick={onSearch}>Buscar Ciudad</button>
+          <h1>{input.caja}</h1>
+        </form>
+      </div>
+    );
 }
 
-export default App;
