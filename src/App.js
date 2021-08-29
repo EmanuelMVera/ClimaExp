@@ -1,59 +1,64 @@
-import react, {useState} from "react";
+import React, {useState} from "react";
+import Card from './Card.jsx'
+import Formulario from "./Formulario.jsx";
 
 export default function App() {
-    const [input, setInput] = useState([]);
-  /*
-  fetch(url) 
+    const [datos, setDatos] = useState({
+      name: "",
+    });
+  
+  const buscarCiudad = (ciudad) => {
+  fetch(`http://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=4ae2636d8dfbdc3044bede63951a019b&units=metric`) 
   //acepta la URL de la API como parámetro
-    .then(function() {
+    .then(r => r.json())
+    .then((recurso) => {
       //contiene el código para gestionar los datos recibidos de la API
-
-    })
-    .catch(function() {
-      //se ejecutará si se produce un error al invocar la API de su elección
-
-    });*/
-
-    function onSearch(ciudad) {
-    ciudad.preventDefault()
-    fetch(`http://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=4ae2636d8dfbdc3044bede63951a019b&units=metric`)
-      .then(r => r.json())
-      .then((recurso) => {
-        if(recurso.main !== undefined){
+      if(recurso.main !== undefined){
           const ciudad = {
+            name: recurso.name,
             min: Math.round(recurso.main.temp_min),
             max: Math.round(recurso.main.temp_max),
             img: recurso.weather[0].icon,
             id: recurso.id,
             wind: recurso.wind.speed,
             temp: recurso.main.temp,
-            name: recurso.name,
             weather: recurso.weather[0].main,
             clouds: recurso.clouds.all,
             latitud: recurso.coord.lat,
             longitud: recurso.coord.lon
           };
-          setInput(input => [...input, ciudad]);
-        } else {
-          alert("Ciudad no encontrada");
-        }
-      });
+        console.log(ciudad)
+        setDatos(ciudad);
+      } else {
+        console.log("Ciudad No encontrada")
+      }
+    });
+}
+
+      const handleSubmit = (event) => {
+        event.preventDefault()
+        console.log(datos.name)
+        buscarCiudad(datos.name)
+
       }
 
         const handleInputChange = (event) => {
-          setInput({
-              ...input,
+          setDatos({
+              ...datos,
               [event.target.name] : event.target.value
           })
       }
 
     return (
         <div>
-        <form onSubmit={onSearch}>
+        <form onSubmit={handleSubmit}>
           <label>Buscador</label> 
-          <input type="text" onChange={handleInputChange}/>
+          <input 
+              type="text" 
+              onChange={handleInputChange}
+              name="name"
+          />
           <button type="submit">Buscar Ciudad</button>
-          <h1>{input.caja}</h1>
         </form>
       </div>
     );
