@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {Fragment, useState} from 'react';
 import Card from './Card.jsx'
 import Formulario from "./Formulario.jsx";
 
@@ -50,7 +50,7 @@ export default function App() {
       }
 
     return (
-        <div>
+      <Fragment>
         <form onSubmit={handleSubmit}>
           <label>Buscador</label> 
           <input 
@@ -60,7 +60,8 @@ export default function App() {
           />
           <button type="submit">Buscar Ciudad</button>
         </form>
-      </div>
+        <Card name={datos.name} min={datos.min} max={datos.max} img={datos.img}/>
+      </Fragment>
     );
 }
 

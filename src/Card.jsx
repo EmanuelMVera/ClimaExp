@@ -1,12 +1,17 @@
 import React from 'react';
+import Style from './Card.module.css'
 
-export default function Card(){
-    <div>
-        <h1>Titulo</h1>
-        <div>
-            <h2>Min: </h2>
-            <h2>Max: </h2>
-            <img src=""/>
+function Card(datos){
+    return (
+        <div className={Style.contenedor}>
+            <h1>Titulo: {datos.name}</h1>
+            <div>
+                <h2>Min: {datos.min}</h2>
+                <h2>Max: {datos.max}</h2>
+                <img src={datos.img} alt="img"/>
+            </div>
         </div>
-    </div>
+    )  
 }
+
+export default Card;
