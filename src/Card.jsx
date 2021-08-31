@@ -8,7 +8,7 @@ function Card(datos){
             <div>
                 <h2>Min: {datos.min}</h2>
                 <h2>Max: {datos.max}</h2>
-                <img src={datos.img} alt="img"/>
+                <img src={`http://openweathermap.org/img/wn/${datos.img}@2x.png`} alt="img"/>
             </div>
         </div>
     )  
